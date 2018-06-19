@@ -1,0 +1,50 @@
+version: '3.6'
+
+services:
+  nginx_proxy:
+    depends_on:
+      - backend_server
+    container_name: nginx_proxy
+    build:
+      context: .
+      dockerfile: deployment/proxy/Dockerfile
+    networks:
+      - frontend_network
+    ports:
+      - 80:80
+    restart: always
+
+  backend_server:
+    depends_on:
+      - postgres_db
+    container_name: backend_server
+    build:
+      context: .
+      dockerfile: deployment/target/Dockerfile
+    networks:
+      - frontend_network
+      - backend_network
+    restart: always
+
+  postgres_db:
+    container_name: postgres_db
+    build:
+      context: .
+      dockerfile: deployment/db/Dockerfile
+    environment:
+      POSTGRES_DB: demo_db
+      POSTGRES_USER: demo_user
+      POSTGRES_PASSWORD: P@88w0rd
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend_network
+    restart: always
+
+networks:
+  frontend_network:
+  backend_network:
+
+volumes:
+  db_data:
+    external: true
