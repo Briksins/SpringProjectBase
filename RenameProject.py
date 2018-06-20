@@ -125,7 +125,7 @@ def fix_files_content():
         replace_in_file(java_file, {"com.company.springprojectbase": conf["full_pkg_name"]})
 
     # Gradle
-    replace_in_file("settings.gradle", {"SpringProjectBase": conf["project_name"]})
+    replace_in_file("settings.gradle", {"SpringProjectBase": conf["project_name_lower"]})
     replace_in_file("build.gradle", {"com.company": conf["package_pref"]+ "." + conf["package_comp"]})
 
     # Scripts
