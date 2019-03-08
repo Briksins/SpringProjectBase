@@ -200,7 +200,7 @@ def get_letest_spring_version():
     return version
 
 def clean_git_repo():
-    shutil.rmtree(".git")
+    shutil.rmtree(".git", ignore_errors=True)
     subprocess.Popen(["git", "init"])
 
 
