@@ -199,7 +199,7 @@ def get_letest_spring_version():
     print("Using latest Spring Boot version: " + version)
     return version
 
-def clean_git_repo()
+def clean_git_repo():
     shutil.rmtree(".git")
     subprocess.Popen(["git", "init"])
 
