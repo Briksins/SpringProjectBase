@@ -25,3 +25,8 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### Python ###
+venv
+*.pyc
+__pycache__

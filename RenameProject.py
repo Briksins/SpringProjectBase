@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+from urllib import request
 
 
 conf = {}
@@ -11,6 +12,7 @@ def start():
     if len(conf) != 5:
         ask_project_info()
     rename_the_project()
+    upgrade_spring_version()
 
 
 # Example: package=com.company
@@ -165,6 +167,33 @@ def get_all_java_files(path="src", ignore=None):
             if ignore and ignore not in item:
                 files_list.append(full_item_path)
     return files_list
+
+
+def upgrade_spring_version():
+    print("current directory is : " + os.getcwd())
+    os.rename("build.gradle", "build.gradle.old")
+    with open("build.gradle.old", "r") as old_f:
+        with open("build.gradle", "w") as new_f:
+            for line in old_f.readlines():
+                if line.startswith("\t\tspringBootVersion"):
+                    cur_version = get_letest_spring_version()
+                    line = "\t\tspringBootVersion = '" + cur_version + ".RELEASE'\n"
+                new_f.write(line)
+    os.remove("build.gradle.old")
+                
+                
+
+
+def get_letest_spring_version():
+    req = request.Request("https://spring.io/projects/spring-boot")
+    data = str(request.urlopen(req).read())
+    data = data.split('class="version label current">')
+    version = ""
+    for char in data[1]:
+        if char == '<':
+            break
+        version += char
+    return version
 
 
 if __name__ == "__main__":
