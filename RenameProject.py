@@ -2,6 +2,8 @@
 import os
 import sys
 from urllib import request
+import shutil
+import subprocess
 
 
 conf = {}
@@ -13,6 +15,7 @@ def start():
         ask_project_info()
     rename_the_project()
     upgrade_spring_version()
+    clean_git_repo()
 
 
 # Example: package=com.company
@@ -195,6 +198,10 @@ def get_letest_spring_version():
         version += char
     print("Using latest Spring Boot version: " + version)
     return version
+
+def clean_git_repo()
+    shutil.rmtree(".git")
+    subprocess.Popen(["git", "init"])
 
 
 if __name__ == "__main__":
