@@ -193,6 +193,7 @@ def get_letest_spring_version():
         if char == '<':
             break
         version += char
+    print("Using latest Spring Boot version: " + version)
     return version
 
 
